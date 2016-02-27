@@ -1,0 +1,88 @@
+* {
+    font-family: Arial, sans;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+h1 {
+    margin: 1em 0;
+    text-align: center;
+}
+
+#container {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.container-tab {
+    height: 2.5em;
+    visibility: hidden;
+}
+
+.container-label {
+    background: #f9f9f9;
+    border-radius: .25em .25em 0 0;
+    color: #888;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-size: 1em;
+    height: 2.5em;
+    line-height: 2.5em;
+    margin-right: .25em;
+    padding: 0 1.5em;
+    text-align: center;
+}
+
+#container input:hover + label {
+    background: #ddd;
+    color: #666;
+}
+
+.container-tab:checked + .container-label {
+    background: #f1f1f1;
+    color: #444;
+    position: relative;
+    z-index: 6;
+}
+
+#content {
+    background: #f1f1f1;
+    border-radius: 0 .25em .25em .25em;
+    min-height: 20em;
+    position: relative;
+    width: 100%;
+    z-index: 5;
+}
+
+#content div {
+    opacity: 0;
+    padding: 1.5em;
+    position: absolute;
+    z-index: -100;
+}
+
+#container input#tab-1:checked ~ #content #content-1,
+#container input#tab-2:checked ~ #content #content-2,
+#container input#tab-3:checked ~ #content #content-3 {
+    opacity: 1;
+    z-index: 100;
+}
+
+input.visible {
+    visibility: visible !important;
+}
+
+.pretty-table td {
+    text-align: center;
+    padding: 0.25em;
+    border-radius: .25em;
+}
+
+.pretty-table tr td:nth-child(1) {
+    background: black;
+    color: white;
+    font-weight: bold;
+}
