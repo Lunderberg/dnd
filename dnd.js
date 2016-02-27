@@ -1,18 +1,4 @@
-function stat_bonus(stat_score) {
-    return Math.floor((stat_score-10)/2);
-}
-
-function define_stat_watcher(input_name, output_name) {
-    var input = document.getElementById(input_name)
-    var output = document.getElementById(output_name)
-
-    function callback() {
-        var bonus = stat_bonus(input.value);
-        output.innerHTML = bonus;
-    }
-
-    input.addEventListener("change", callback);
-}
+"use strict";
 
 function die_roll(n_sides) {
     return 1 + Math.floor(Math.random() * n_sides);
@@ -29,24 +15,77 @@ function stat_roll() {
     return sum - worst_roll;
 }
 
-function roll_all_stats() {
-    var score_names = ["str-score","dex-score","con-score",
-                       "int-score","wis-score","cha-score"];
-    for(var i=0; i<score_names.length; i++){
-        var score_name = score_names[i];
-        var bonus_name = score_name.replace("score","bonus");
-        var score = document.getElementById(score_name);
-        var bonus = document.getElementById(bonus_name);
-        score.value = stat_roll();
-        bonus.innerHTML = stat_bonus(score.value);
+var Stat = function(name) {
+    this.name = name;
+    this.score = 10;
+}
+
+Object.defineProperty(Stat.prototype, "bonus", {
+    get: function bonus() {
+        var output = Math.floor((this.score-10)/2);
+        if(output >= 0){
+            output = "+" + output;
+        }
+        return output;
+    }
+});
+
+var Character = function() {
+    this.stats = new Array();
+    var stat_names = ["STR","DEX","CON","INT","WIS","CHA"];
+    for(var i=0; i<stat_names.length; i++){
+        var name = stat_names[i];
+        this.stats[name] = new Stat(name);
     }
 }
 
-define_stat_watcher("str-score", "str-bonus");
-define_stat_watcher("dex-score", "dex-bonus");
-define_stat_watcher("con-score", "con-bonus");
-define_stat_watcher("int-score", "int-bonus");
-define_stat_watcher("wis-score", "wis-bonus");
-define_stat_watcher("cha-score", "cha-bonus");
+Character.prototype.rollAllStats = function() {
+    for(var statname in this.stats){
+        if(this.stats.hasOwnProperty(statname)){
+            var stat = this.stats[statname];
+            stat.score = stat_roll();
+        }
+    }
+}
+
+var char = new Character();
+
+function define_stat_watcher(stat) {
+    var input_name = stat.toLowerCase() + "-score";
+    var input = document.getElementById(input_name)
+
+    function callback() {
+        char.stats[stat].score = input.value;
+        update_all();
+    }
+
+    input.addEventListener("change", callback);
+}
+
+function roll_all_stats() {
+    char.rollAllStats();
+    update_all();
+}
+
+function update_all() {
+    for(var statname in char.stats){
+        if(char.stats.hasOwnProperty(statname)){
+            var stat = char.stats[statname];
+            var score_name = stat.name.toLowerCase() + "-score";
+            var bonus_name = stat.name.toLowerCase() + "-bonus";
+            var score = document.getElementById(score_name);
+            var bonus = document.getElementById(bonus_name);
+            score.value = stat.score;
+            bonus.innerHTML = stat.bonus;
+        }
+    }
+}
+
+define_stat_watcher("STR");
+define_stat_watcher("DEX");
+define_stat_watcher("CON");
+define_stat_watcher("INT");
+define_stat_watcher("WIS");
+define_stat_watcher("CHA");
 
 document.getElementById("roll-stats").addEventListener("click",roll_all_stats);
