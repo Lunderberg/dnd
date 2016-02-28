@@ -1,0 +1,17 @@
+{% assign stats = "STR|DEX|CON|INT|WIS|CHA" | split:"|" %}
+
+<table class="pretty-table">
+  <tbody>
+    {% for stat in stats %}
+    <tr>
+      <td>{{ stat }}</td>
+      <td>
+        <input id="{{ stat }}-score" type="number" value="10" min="3" max="20" size="2" />
+      </td>
+      <td id="{{ stat }}-bonus">+0</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<input id="roll-stats" type="button" value="Roll Stats" />

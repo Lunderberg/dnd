@@ -1,39 +1,33 @@
-<!DOCTYPE html>
+---
+layout: default
+---
 
-<title>Title Text Here</title>
 
-<head>
-  <link rel="stylesheet" type="text/css" href="stylesheet.css">
-</head>
+<h1>D&amp;D 5e</h1>
 
-<body>
+<div id="container">
+  <input id="tab-1" class="container-tab" type="radio" name="tab-group" checked="checked" />
+  <label for="tab-1" class="container-label">Stats</label>
 
-  <h1>D&amp;D 5e</h1>
+  <input id="tab-2" class="container-tab" type="radio" name="tab-group" />
+  <label for="tab-2" class="container-label">Tab 2</label>
 
-  <div id="container">
-    <input id="tab-1" class="container-tab" type="radio" name="tab-group" checked="checked" />
-    <label for="tab-1" class="container-label">Stats</label>
+  <input id="tab-3" class="container-tab" type="radio" name="tab-group" />
+  <label for="tab-3" class="container-label">Tab 3</label>
 
-    <input id="tab-2" class="container-tab" type="radio" name="tab-group" />
-    <label for="tab-2" class="container-label">Tab 2</label>
+  <div id="content">
+    <div id="content-1">
+      {% include stats-tab.html %}
+    </div>
 
-    <input id="tab-3" class="container-tab" type="radio" name="tab-group" />
-    <label for="tab-3" class="container-label">Tab 3</label>
+    <div id="content-2">
+      Content of tab 2
+    </div>
 
-    <div id="content">
-      <div id="content-1">
-        <!-- #include virtual="stats-tab.html" -->
-      </div>
-
-      <div id="content-2">
-        Content of tab 2
-      </div>
-
-      <div id="content-3">
-        Content of tab 3
-      </div>
+    <div id="content-3">
+      Content of tab 3
     </div>
   </div>
+</div>
 
-  <script src="dnd.js"></script>
-</body>
+<script src="dnd.js"></script>
